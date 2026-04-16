@@ -9,18 +9,24 @@ import java.util.List;
 
 @Configuration
 public class OpenApiConfig {
+
     @Bean
     public OpenAPI customOpenAPI() {
-        // Al usar "/" se adapta automáticamente a Localhost o a Railway
-        Server server = new Server();
-        server.setUrl("/");
-        server.setDescription("Servidor de veterinaria layka");
+        // 1. Servidor de Producción (Railway)
+        Server productionServer = new Server();
+        productionServer.setUrl("https://veterinaria-production-1398.up.railway.app");
+        productionServer.setDescription("Servidor de Producción - Railway");
+
+        // 2. Servidor de Desarrollo (Local)
+        Server localServer = new Server();
+        localServer.setUrl("http://localhost:8080");
+        localServer.setDescription("Servidor de Desarrollo Local");
 
         return new OpenAPI()
-                .servers(List.of(server))
+                .servers(List.of(productionServer, localServer))
                 .info(new Info()
-                        .title("Cveterinaria layka API")
+                        .title("Veterinaria Laika API")
                         .version("1.0")
-                        .description("Documentación oficial de veterinaria layka"));
+                        .description("Documentación oficial de los servicios de Veterinaria Laika (Mascotas, Usuarios y Veterinarios)"));
     }
 }
