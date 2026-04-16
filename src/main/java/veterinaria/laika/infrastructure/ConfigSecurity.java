@@ -39,15 +39,15 @@ public class ConfigSecurity {
     public UserDetailsService userDetailsService() {
         // Usuario ADMIN para que puedas CREAR, EDITAR y BORRAR películas
         UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("admin123")
+                .username("ADMIN")
+                .password("ADMIN")
                 .roles("ADMIN")
                 .build();
 
         // Usuario USER solo para ver (LISTAR)
         UserDetails user = User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("user123")
+                .username("USER")
+                .password("USER")
                 .roles("USER")
                 .build();
 
