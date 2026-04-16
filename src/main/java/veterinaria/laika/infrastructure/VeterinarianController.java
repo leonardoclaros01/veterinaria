@@ -1,8 +1,7 @@
 package veterinaria.laika.infrastructure;
 
 import io.swagger.v3.oas.annotations.Operation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import veterinaria.laika.domain.Veterinarian;
@@ -12,7 +11,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/veterinarians")
 public class VeterinarianController {
-    private static final Logger log = LoggerFactory.getLogger(VeterinarianController.class);
     private final VeterinarianRepository vetRepository;
 
     public VeterinarianController(VeterinarianRepository vetRepository) {
@@ -22,14 +20,36 @@ public class VeterinarianController {
     @Operation(summary = "LISTAR VETERINARIOS")
     @GetMapping
     public List<Veterinarian> listar() {
-        log.info("Laika Vet: Consultando staff médico");
         return vetRepository.findAll();
     }
 
-    @Operation(summary = "REGISTRAR - SOLO ADMIN")
-    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "REGISTRAR VETERINARIO")
     @PostMapping
     public Veterinarian crear(@RequestBody Veterinarian vet) {
         return vetRepository.save(vet);
+    }
+
+    @Operation(summary = "EDITAR VETERINARIO")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<Veterinarian> actualizar(@PathVariable Long id, @RequestBody Veterinarian detalles) {
+        return vetRepository.findById(id).map(vet -> {
+            // Sincronizado con tus getters/setters: fullName y licenseNumber
+            vet.setFullName(detalles.getFullName());
+            vet.setSpecialty(detalles.getSpecialty());
+            vet.setLicenseNumber(detalles.getLicenseNumber());
+            return ResponseEntity.ok(vetRepository.save(vet));
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @Operation(summary = "BORRAR VETERINARIO")
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        if (vetRepository.existsById(id)) {
+            vetRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
