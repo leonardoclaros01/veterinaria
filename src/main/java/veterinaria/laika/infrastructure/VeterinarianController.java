@@ -1,4 +1,4 @@
-package veterinaria.laika.infrastructure.controller;
+package veterinaria.laika.infrastructure;
 
 import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
