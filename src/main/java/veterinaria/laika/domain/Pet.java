@@ -10,36 +10,65 @@ public class Pet {
     private Long id;
     private String name;
     private String species;
-    
+
     @ManyToOne
     @JoinColumn(name = "breed_id")
     private Breed breed;
-    
+
     private Integer age;
 
-    // ENLACE CON EL DUEÑO
     @ManyToOne
-    @JoinColumn(name = "user_id") // Esto crea la llave foránea en la tabla pets
+    @JoinColumn(name = "user_id")
     private User owner;
 
-    public Pet() {}
+    public Pet() {
+    }
 
-    // --- GETTERS Y SETTERS ---
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getSpecies() { return species; }
-    public void setSpecies(String species) { this.species = species; }
+    public String getName() {
+        return name;
+    }
 
-    public Breed getBreed() { return breed; }
-    public void setBreed(Breed breed) { this.breed = breed; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public Integer getAge() { return age; }
-    public void setAge(Integer age) { this.age = age; }
+    public String getSpecies() {
+        return species;
+    }
 
-    public User getOwner() { return owner; }
-    public void setOwner(User owner) { this.owner = owner; }
+    public void setSpecies(String species) {
+        this.species = species;
+    }
+
+    public Breed getBreed() {
+        return breed;
+    }
+
+    public void setBreed(Breed breed) {
+        this.breed = breed;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 }
