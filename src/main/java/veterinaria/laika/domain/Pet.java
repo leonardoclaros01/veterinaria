@@ -10,7 +10,11 @@ public class Pet {
     private Long id;
     private String name;
     private String species;
-    private String breed;
+    
+    @ManyToOne
+    @JoinColumn(name = "breed_id")
+    private Breed breed;
+    
     private Integer age;
 
     // ENLACE CON EL DUEÑO
@@ -30,8 +34,8 @@ public class Pet {
     public String getSpecies() { return species; }
     public void setSpecies(String species) { this.species = species; }
 
-    public String getBreed() { return breed; }
-    public void setBreed(String breed) { this.breed = breed; }
+    public Breed getBreed() { return breed; }
+    public void setBreed(Breed breed) { this.breed = breed; }
 
     public Integer getAge() { return age; }
     public void setAge(Integer age) { this.age = age; }
